@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">IDictionary</string>
+    <string name="dialog_title">Error</string>
+    <string name="cant_find">can\'t find data</string>
+    <string name="search">search</string>
+    <string name="enter_word">Enter word...</string>
+</resources>
