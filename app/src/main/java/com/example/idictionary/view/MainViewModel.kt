@@ -8,7 +8,7 @@ import com.example.idictionary.viewmodel.MainInteractor
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(private val interactor: MainInteractor) :
+class MainViewModel (private val interactor: MainInteractor) :
     BaseViewModel<AppState>() {
     private var appState: AppState? = null
 

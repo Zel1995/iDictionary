@@ -6,7 +6,7 @@ import com.example.idictionary.model.repository.Repository
 import io.reactivex.Observable
 import javax.inject.Inject
 
-class MainInteractor @Inject constructor(private val repository: Repository<List<DataModel>>) {
+class MainInteractor (private val repository: Repository<List<DataModel>>) {
     fun getData(word: String): Observable<AppState> {
         return repository.getData(word).map { AppState.Success(it) }
     }
