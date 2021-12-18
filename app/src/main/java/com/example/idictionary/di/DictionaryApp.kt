@@ -1,7 +1,14 @@
 package com.example.idictionary.di
 
 import android.app.Application
+import org.koin.core.context.startKoin
 
 class DictionaryApp:Application() {
-    val component = DaggerAppComponent.builder().build()
+
+    override fun onCreate() {
+        super.onCreate()
+        startKoin{
+            modules(listOf(applicationModule, networkModule))
+        }
+    }
 }
