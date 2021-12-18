@@ -62,6 +62,8 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-android-compat:$koin_version"
+    //Coil
+    implementation 'io.coil-kt:coil:0.11.0'
     //coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC2'
     //viewModel

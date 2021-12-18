@@ -3,11 +3,11 @@ package com.example.idictionary.view.details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import coil.ImageLoader
+import coil.request.LoadRequest
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentDetailsBinding
-import com.example.idictionary.model.data.AppState
 import com.example.idictionary.model.data.DataModel
-import com.example.idictionary.utils.parseSearchResult
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
     companion object {
@@ -33,6 +33,18 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private fun initViews(dataModel: DataModel?) {
         binding.detailsTitleTextView.text = dataModel?.text
         binding.detailsContentTextView.text = dataModel?.meanings?.get(0)?.translation?.translation
+        val url = dataModel?.meanings?.get(0)?.imageUrl
+        val request = LoadRequest.Builder(requireContext())
+            .data("https:$url")
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_foreground)
+            .target(
+                onStart = {},
+                onError = {},
+                onSuccess = {
+                    binding.detailsImg.setImageDrawable(it)
+                }).build()
+        ImageLoader(requireContext()).execute(request)
 
     }
 }
