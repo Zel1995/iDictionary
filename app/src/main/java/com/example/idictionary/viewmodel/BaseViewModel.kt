@@ -7,14 +7,8 @@ import com.example.idictionary.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseViewModel<T : AppState>(
-    protected val liveDataForViewToObserve: MutableLiveData<T> = MutableLiveData(),
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
+    protected val _mutableLiveData: MutableLiveData<T> = MutableLiveData(),
     protected val schedulerProvider: SchedulerProvider = SchedulerProvider()
 ):ViewModel() {
-    abstract fun getData(word:String)
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
-    }
+    abstract fun getData(word:String = "")
 }

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -33,13 +34,16 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 }
 
 dependencies {
-
+    //room
+    implementation "androidx.room:room-runtime:2.4.0"
+    kapt "androidx.room:room-compiler:2.4.0"
+    implementation "androidx.room:room-ktx:2.4.0"
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     //dagger 2
@@ -53,11 +57,20 @@ dependencies {
     implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
     //okHttp
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
-    //Rx-Java
-    implementation "io.reactivex.rxjava2:rxjava:2.2.21"
-    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-
+    //Koin
+    def koin_version = "3.1.2"
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-compat:$koin_version"
+    //Coil
+    implementation 'io.coil-kt:coil:0.11.0'
+    //coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0-RC2'
+    //viewModel
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    //fragment ktx
+    implementation 'androidx.fragment:fragment-ktx:1.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'

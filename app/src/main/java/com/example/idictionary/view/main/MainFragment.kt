@@ -1,49 +1,59 @@
-package com.example.idictionary.view
+package com.example.idictionary.view.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.idictionary.MainActivity
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentMainBinding
 import com.example.idictionary.model.data.AppState
-import com.example.idictionary.utils.ui.AlertDialogFragment
 import com.example.idictionary.utils.ui.getAlertDialog
-import com.example.idictionary.view.adapter.MainAdapter
-import javax.inject.Inject
+import com.example.idictionary.view.details.DetailsFragment
+import com.example.idictionary.view.history.HistoryFragment
+import com.example.idictionary.view.main.adapter.MainAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment(R.layout.fragment_main) {
     companion object {
         private const val DIALOG_FRAGMENT_KEY = "DIALOG_FRAGMENT_KEY"
     }
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var model: MainViewModel
-
+    private val model by viewModel<MainViewModel>()
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
     private val adapter: MainAdapter by lazy {
         MainAdapter {
-            Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.main_fragment_container,
+                DetailsFragment.newInstance(it)
+            ).addToBackStack(getString(R.string.details)).commit()
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).appComponent.inject(this)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = viewModelFactory.create(MainViewModel::class.java)
         _binding = FragmentMainBinding.bind(view)
         binding.mainRecyclerview.adapter = adapter
+        initMenu()
         initFabListener()
         initViewModel()
+    }
+
+    private fun initMenu() {
+        setHasOptionsMenu(true)
+        binding.mainToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.history_item -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragment_container, HistoryFragment())
+                        .addToBackStack(getString(R.string.History)).commit()
+                    return@setOnMenuItemClickListener true
+                }
+                else -> {
+                    return@setOnMenuItemClickListener false
+                }
+            }
+        }
     }
 
     private fun initFabListener() {

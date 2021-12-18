@@ -1,9 +1,10 @@
 package com.example.idictionary.rx
 
 import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
 
 interface ISchedulerProvider {
-    fun ui(): Scheduler
+    fun ui(): CoroutineDispatcher
 
-    fun io(): Scheduler
+    fun io(): CoroutineDispatcher
 }
