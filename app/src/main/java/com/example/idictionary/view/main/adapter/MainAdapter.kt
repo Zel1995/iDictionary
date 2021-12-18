@@ -1,4 +1,4 @@
-package com.example.idictionary.view.adapter
+package com.example.idictionary.view.main.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +29,7 @@ class MainAdapter(private var onItemClick: (DataModel) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: DictionaryViewHolder, position: Int) {
-        (holder as DictionaryViewHolder).bind(data[position])
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int = data.size

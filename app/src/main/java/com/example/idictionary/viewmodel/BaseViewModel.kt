@@ -10,5 +10,5 @@ abstract class BaseViewModel<T : AppState>(
     protected val _mutableLiveData: MutableLiveData<T> = MutableLiveData(),
     protected val schedulerProvider: SchedulerProvider = SchedulerProvider()
 ):ViewModel() {
-    abstract fun getData(word:String)
+    abstract fun getData(word:String = "")
 }

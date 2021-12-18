@@ -1,11 +1,10 @@
 package com.example.idictionary.rx
 
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-class SchedulerProvider:ISchedulerProvider {
-    override fun ui(): Scheduler = AndroidSchedulers.mainThread()
+class SchedulerProvider : ISchedulerProvider {
+    override fun ui(): CoroutineDispatcher = Dispatchers.Main
 
-    override fun io(): Scheduler = Schedulers.io()
+    override fun io(): CoroutineDispatcher = Dispatchers.IO
 }

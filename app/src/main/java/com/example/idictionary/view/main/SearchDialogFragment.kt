@@ -1,4 +1,4 @@
-package com.example.idictionary.view
+package com.example.idictionary.view.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

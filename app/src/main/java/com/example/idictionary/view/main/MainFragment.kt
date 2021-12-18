@@ -1,14 +1,15 @@
-package com.example.idictionary.view
+package com.example.idictionary.view.main
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentMainBinding
 import com.example.idictionary.model.data.AppState
 import com.example.idictionary.utils.ui.getAlertDialog
-import com.example.idictionary.view.adapter.MainAdapter
+import com.example.idictionary.view.details.DetailsFragment
+import com.example.idictionary.view.history.HistoryFragment
+import com.example.idictionary.view.main.adapter.MainAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment(R.layout.fragment_main) {
@@ -22,7 +23,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val adapter: MainAdapter by lazy {
         MainAdapter {
-            Toast.makeText(requireContext(), it.text, Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.beginTransaction().replace(
+                R.id.main_fragment_container,
+                DetailsFragment.newInstance(it)
+            ).addToBackStack(getString(R.string.details)).commit()
         }
     }
 
@@ -30,8 +34,26 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentMainBinding.bind(view)
         binding.mainRecyclerview.adapter = adapter
+        initMenu()
         initFabListener()
         initViewModel()
+    }
+
+    private fun initMenu() {
+        setHasOptionsMenu(true)
+        binding.mainToolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.history_item -> {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.main_fragment_container, HistoryFragment())
+                        .addToBackStack(getString(R.string.History)).commit()
+                    return@setOnMenuItemClickListener true
+                }
+                else -> {
+                    return@setOnMenuItemClickListener false
+                }
+            }
+        }
     }
 
     private fun initFabListener() {

@@ -2,7 +2,7 @@ package com.example.idictionary
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.idictionary.view.MainFragment
+import com.example.idictionary.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
