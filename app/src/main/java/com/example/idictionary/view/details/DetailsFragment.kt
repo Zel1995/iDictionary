@@ -7,12 +7,12 @@ import coil.ImageLoader
 import coil.request.LoadRequest
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentDetailsBinding
-import com.example.idictionary.model.data.DataModel
+import com.example.model.DataModel
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
     companion object {
         private const val DETAILS_KEY = "DETAILS_KEY"
-        fun newInstance(dataModel: DataModel): DetailsFragment =
+        fun newInstance(dataModel: com.example.model.DataModel): DetailsFragment =
             DetailsFragment().apply {
                 arguments = Bundle().apply {
                     putParcelable(DETAILS_KEY, dataModel)
@@ -26,11 +26,11 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDetailsBinding.bind(view)
-        val dataModel = arguments?.getParcelable<DataModel>(DETAILS_KEY)
+        val dataModel = arguments?.getParcelable<com.example.model.DataModel>(DETAILS_KEY)
         initViews(dataModel)
     }
 
-    private fun initViews(dataModel: DataModel?) {
+    private fun initViews(dataModel: com.example.model.DataModel?) {
         binding.detailsTitleTextView.text = dataModel?.text
         binding.detailsContentTextView.text = dataModel?.meanings?.get(0)?.translation?.translation
         val url = dataModel?.meanings?.get(0)?.imageUrl

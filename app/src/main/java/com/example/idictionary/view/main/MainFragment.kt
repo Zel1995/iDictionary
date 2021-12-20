@@ -5,10 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentMainBinding
-import com.example.idictionary.model.data.AppState
-import com.example.idictionary.utils.ui.getAlertDialog
+import com.example.utils.getAlertDialog
 import com.example.idictionary.view.details.DetailsFragment
-import com.example.idictionary.view.history.HistoryFragment
+import com.example.historyscreen.HistoryFragment
 import com.example.idictionary.view.main.adapter.MainAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,7 +44,9 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             when (it.itemId) {
                 R.id.history_item -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragment_container, HistoryFragment())
+                        .replace(R.id.main_fragment_container,
+                            com.example.historyscreen.HistoryFragment()
+                        )
                         .addToBackStack(getString(R.string.History)).commit()
                     return@setOnMenuItemClickListener true
                 }
@@ -69,7 +70,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private fun initViewModel() {
         model.subscribe().observe(viewLifecycleOwner, {
             when (it) {
-                is AppState.Success -> {
+                is com.example.model.AppState.Success -> {
                     val data = it.data
                     if (data.isNullOrEmpty()) {
                         requireContext().getAlertDialog(
@@ -80,13 +81,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                         adapter.setData(data)
                     }
                 }
-                is AppState.Error -> {
+                is com.example.model.AppState.Error -> {
                     requireContext().getAlertDialog(
                         getString(R.string.dialog_title),
                         it.error.message.toString()
                     ).show()
                 }
-                is AppState.Loading -> {
+                is com.example.model.AppState.Loading -> {
                     binding.mainProgress.visibility = if (it.isLoading) View.VISIBLE else View.GONE
                     binding.mainRecyclerview.visibility =
                         if (it.isLoading) View.GONE else View.VISIBLE

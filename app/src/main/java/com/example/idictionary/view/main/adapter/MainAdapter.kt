@@ -6,14 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.idictionary.R
-import com.example.idictionary.model.data.DataModel
-import com.example.idictionary.utils.convertMeaningsToString
+import com.example.utils.convertMeaningsToString
 
-class MainAdapter(private var onItemClick: (DataModel) -> Unit) :
+class MainAdapter(private var onItemClick: (com.example.model.DataModel) -> Unit) :
     RecyclerView.Adapter<MainAdapter.DictionaryViewHolder>() {
-    private val data = mutableListOf<DataModel>()
+    private val data = mutableListOf<com.example.model.DataModel>()
 
-    fun setData(dataToSet: List<DataModel>) {
+    fun setData(dataToSet: List<com.example.model.DataModel>) {
         data.apply {
             clear()
             addAll(dataToSet)
@@ -38,10 +37,10 @@ class MainAdapter(private var onItemClick: (DataModel) -> Unit) :
     inner class DictionaryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.title_textview_recycler_item)
         val content = itemView.findViewById<TextView>(R.id.content_textview_recycler_item)
-        fun bind(data: DataModel) {
+        fun bind(data: com.example.model.DataModel) {
             if(layoutPosition != RecyclerView.NO_POSITION){
                 title.text = data.text
-                content.text = convertMeaningsToString(data.meanings)
+                content.text = com.example.utils.convertMeaningsToString(data.meanings)
                 itemView.setOnClickListener{ onItemClick.invoke(data)}
             }
         }

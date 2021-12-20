@@ -29,6 +29,17 @@ object Versions {
     const val espressoCore = "3.4.0"
 
 }
+
+object Modules {
+    const val model = ":model"
+    const val repository = ":repository"
+    const val utils = ":utils"
+    const val app = ":app"
+
+    //feature
+    const val historyScreen =":historyScreen"
+
+}
 object Config {
     const val application_id = "com.example.idictionary"
     const val compile_sdk = 31
