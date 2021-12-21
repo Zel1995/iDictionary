@@ -5,9 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.historyscreen.databinding.FragmentHistoryBinding
 import com.example.utils.getAlertDialog
+import org.koin.androidx.scope.ScopeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HistoryFragment : Fragment(R.layout.fragment_history) {
+class HistoryFragment : ScopeFragment(R.layout.fragment_history) {
     private val adapter = HistoryAdapter()
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!

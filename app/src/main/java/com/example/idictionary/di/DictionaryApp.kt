@@ -4,13 +4,18 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class DictionaryApp:Application() {
+class DictionaryApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        startKoin{
+        startKoin {
             androidContext(applicationContext)
-            modules(listOf(applicationModule, networkModule, storageModule))
+            modules(
+                listOf(
+                    applicationModule, networkModule, storageModule, mainScreen,
+                    historyScreen
+                )
+            )
         }
     }
 }

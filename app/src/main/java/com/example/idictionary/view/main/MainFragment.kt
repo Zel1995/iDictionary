@@ -2,24 +2,30 @@ package com.example.idictionary.view.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.example.idictionary.R
 import com.example.idictionary.databinding.FragmentMainBinding
-import com.example.utils.getAlertDialog
 import com.example.idictionary.view.details.DetailsFragment
-import com.example.historyscreen.HistoryFragment
 import com.example.idictionary.view.main.adapter.MainAdapter
+import com.example.utils.ViewByIdDelegate
+import com.example.utils.getAlertDialog
+import com.example.utils.viewById
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.koin.androidx.scope.ScopeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment(R.layout.fragment_main) {
+class MainFragment : ScopeFragment(R.layout.fragment_main) {
     companion object {
         private const val DIALOG_FRAGMENT_KEY = "DIALOG_FRAGMENT_KEY"
+        private const val MAIN_FRAGMENT_SCOPE_KEY = "MAIN_FRAGMENT_SCOPE_KEY"
     }
 
-    private val model by viewModel<MainViewModel>()
+
+
+    private val model: MainViewModel by viewModel()
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
+    private val searchFab by viewById<FloatingActionButton>(R.id.search_fab)
     private val adapter: MainAdapter by lazy {
         MainAdapter {
             requireActivity().supportFragmentManager.beginTransaction().replace(
@@ -34,8 +40,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         _binding = FragmentMainBinding.bind(view)
         binding.mainRecyclerview.adapter = adapter
         initMenu()
-        initFabListener()
         initViewModel()
+        initFabListener()
     }
 
     private fun initMenu() {
@@ -44,7 +50,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             when (it.itemId) {
                 R.id.history_item -> {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_fragment_container,
+                        .replace(
+                            R.id.main_fragment_container,
                             com.example.historyscreen.HistoryFragment()
                         )
                         .addToBackStack(getString(R.string.History)).commit()
@@ -58,7 +65,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     }
 
     private fun initFabListener() {
-        binding.searchFab.setOnClickListener {
+        searchFab.setOnClickListener {
             val searchDialogFragment = SearchDialogFragment()
             searchDialogFragment.setOnSearchClickListener {
                 model.getData(it)
