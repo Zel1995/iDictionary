@@ -1,13 +1,16 @@
 package com.example.idictionary.viewmodel
 
-import com.example.idictionary.model.data.AppState
-import com.example.idictionary.model.data.DataModel
-import com.example.idictionary.model.repository.Repository
-import io.reactivex.Observable
-import javax.inject.Inject
+import com.example.idictionary.model.repository.LocalRepository
+import com.example.model.DataModel
+import com.example.repository.Repository
 
-class MainInteractor @Inject constructor(private val repository: Repository<List<DataModel>>) {
-    fun getData(word: String): Observable<AppState> {
-        return repository.getData(word).map { AppState.Success(it) }
+class MainInteractor(
+    private val repository: Repository<List<DataModel>>,
+    private val localRepository: LocalRepository<List<com.example.model.DataModel>>
+) {
+    suspend fun getData(word: String): com.example.model.AppState {
+        val result = com.example.model.AppState.Success(repository.getData(word))
+        localRepository.saveToDb(result)
+        return result
     }
 }

@@ -1,2 +1,6 @@
 rootProject.name = "IDictionary"
 include ':app'
+include ':model'
+include ':repository'
+include ':utils'
+include ':historyScreen'
